@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Crypto Trading Dashboard</title>
+    
+    <!-- EMBEDDED MANIFEST (Alag se manifest.json banane ki zaroorat nahi) -->
+    <link rel="manifest" href="data:application/manifest+json,{%22short_name%22:%22CryptoApp%22,%22name%22:%22AI%20Crypto%20Trading%20Dashboard%22,%22start_url%22:%22.%22,%22background_color%22:%22%230f172a%22,%22theme_color%22:%22%232dd4bf%22,%22display%22:%22standalone%22,%22orientation%22:%22portrait%22}">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        .app-container { text-align: center; width: 100%; max-width: 400px; padding: 2rem; }
+        .logo-wrapper { position: relative; width: 140px; height: 140px; margin: 0 auto 2rem auto; background-color: #2dd4bf; border-radius: 32px; display: flex; justify-content: center; align-items: center; box-shadow: 0 20px 25px -5px rgba(45, 212, 191, 0.2); }
+        .logo-svg { width: 90px; height: 90px; }
+        .spin-target { transform-origin: center; animation: radar-spin 4s linear infinite; }
+        @keyframes radar-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.025em; }
+        p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 2.5rem; }
+        .enter-btn { background-color: #2dd4bf; color: #0f172a; border: none; padding: 1rem 2.5rem; font-size: 1rem; font-weight: 600; border-radius: 12px; cursor: pointer; width: 100%; transition: all 0.2s ease; box-shadow: 0 4px 6px -1px rgba(45, 212, 191, 0.2); }
+        .enter-btn:hover { background-color: #14b8a6; transform: translateY(-1px); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="logo-wrapper">
+            <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="4" fill="#ffffff" />
+                <circle cx="50" cy="50" r="14" stroke="#ffffff" stroke-width="4" fill="none" />
+                <g class="spin-target">
+                    <path d="M 50,18 A 32,32 0 0,1 82,50" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+                    <path d="M 50,82 A 32,32 0 0,1 18,50" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+                </g>
+            </svg>
+        </div>
+        <h1>AI Crypto Dashboard</h1>
+        <p>Real-time data synchronization panel</p>
+        <button class="enter-btn" onclick="enterApp()">Enter Workspace</button>
+    </div>
+
+    <script>
+        function enterApp() { alert("Welcome! Initializing analytics dashboards..."); }
+
+        // INLINE SERVICE WORKER (Alag se service-worker.js banane ki zaroorat nahi)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                    const CACHE_NAME = 'crypto-v1';
+                    self.addEventListener('install', (e) => {
+                        e.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(['./'])));
+                    });
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(caches.match(e.request).then((r) => r || fetch(e.request)));
+                    });
+                `;
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                navigator.serviceWorker.register(swUrl).catch(err => console.error(err));
+            });
+        }
+    </script>
+</body>
+</html>
+
